@@ -89,12 +89,13 @@ int main() {
 	/* aguardo mensagem de inicio para comecar o jogo*/
 	mvprintw(15,45,"AGUARDANDO JOGADORES");
 	refresh();
-	int teste = -1;
-	while((teste) < 0 || (teste) > 4){
-		recv(socket, &teste , sizeof(int), 0);
+	int recep = -1;
+	while(recep < 0 || recep > MAX_CONEXOES){
+		recv(socket, &recep , sizeof(int), 0);
 	}
+	recep = recep;
 	clear();
-	mvprintw(16,45,"CORPO  DE SUA SNAKE: %d",(teste));
+	mvprintw(16,45,"CORPO  DE SUA SNAKE: %d",(recep));
 	refresh();
 	std::this_thread::sleep_for (std::chrono::milliseconds(1000));
 	while(1){
@@ -111,10 +112,8 @@ int main() {
 			std::this_thread::sleep_for (std::chrono::milliseconds(100));
 			asample1->set_position(0); // caso tenha comido
 			player->play(asample1);
-			
 		}
 		D1->clean(); // recebo do servidor os dados e do upload
-		
  		cliente->unserial();
  		som = tela->update_client();
 // 		D1->dump();

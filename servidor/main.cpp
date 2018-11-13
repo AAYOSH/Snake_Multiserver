@@ -58,7 +58,7 @@ int main()
       Comida *food = new Comida();
       
       //cria classe snake, crio maximo 4 cobras 
-      Cobra_corpo *snake1 = new Cobra_corpo(1, 0, 1, 10);// cria cabeca da cobra 
+      Cobra_corpo *snake1 = new Cobra_corpo(1, 0, 1, 12);// cria cabeca da cobra 
       Cobra_corpo *snake2 = new Cobra_corpo(-1, 0, 100 , 12);// cria cabeca da cobra    ////<<<<<<< mudar as posicoes iniciais e velocidades iniciais
       Cobra_corpo *snake3 = new Cobra_corpo(1, 0, 10, 37);// cria cabeca da cobra
       Cobra_corpo *snake4 = new Cobra_corpo(-1, 0, 100, 37);// cria cabeca da cobra
@@ -179,8 +179,9 @@ void aux_thread(multi_cliente  dados_cliente){ //<< mandar mensagens de inicio
 	jogadores[this_ID] = 1;
 	
 	int i;
+	int envia = this_ID;
 	for( i = 0; i < 2; i++){
-	if(send(this_fd, &this_ID , sizeof(int), 0)) break;
+	if(send(this_fd, &envia , sizeof(int), 0)) break;
 	}
 	
 	i=0;
@@ -193,8 +194,6 @@ void aux_thread(multi_cliente  dados_cliente){ //<< mandar mensagens de inicio
 	std::this_thread::sleep_for (std::chrono::milliseconds(1000));
 	/* loop principal*/
 	int choque1,choque2;
-	
-	
 	
 	uint64_t t1;
 	uint64_t T;
@@ -225,7 +224,6 @@ void aux_thread(multi_cliente  dados_cliente){ //<< mandar mensagens de inicio
 		
 		comida = 0;
 		char c = teclado->getchar(); // < servidor muda para cada thread
-		
 		if (c=='q') 
 			break;
 		if(c == 's'){
@@ -244,17 +242,15 @@ void aux_thread(multi_cliente  dados_cliente){ //<< mandar mensagens de inicio
 			comida = 1;
 		}
 		mtx.lock();
-		D1->update(this_cobra,this_food);
-		D1->serialize(buffer,this_ID,0,comida);
-		if(send(this_fd, buffer, 1000, 0) <= 0) break; /* cliente desconectou*/
-		mtx.unlock();
-		ultimo = this_socket->ultimo_cliente();
-		mtx.lock();
 		choque1 = choque->colisao(this_cobra,this_ID);
 		choque2 = choque->colisao_cobras(this_cobra,this_ID);
 		mtx.unlock();
+		D1->update(this_cobra,this_food);
+		D1->serialize(buffer,this_ID,0,comida);
+		if(send(this_fd, buffer, 1000, 0) <= 0) break; /* cliente desconectou*/
+		ultimo = this_socket->ultimo_cliente();
 		if(choque1 || choque2){ // caso haja colisao, programa é encerrado
-			
+			mtx.lock();
 			std::this_thread::sleep_for (std::chrono::milliseconds(750));
 			D1->update(this_cobra,this_food);
 			D1->serialize(buffer,this_ID,1,0);///<<< manda com ID igual a -1 quando perde
@@ -271,7 +267,7 @@ void aux_thread(multi_cliente  dados_cliente){ //<< mandar mensagens de inicio
 			send(this_fd, buffer, 1000, 0);
 			break;
 		}
-		
+		mvprintw(0,this_ID,"%d",this_ID);
 		std::this_thread::sleep_for (std::chrono::milliseconds(240));
 		refresh();
 	}

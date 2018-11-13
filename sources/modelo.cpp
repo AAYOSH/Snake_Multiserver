@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 
 
-
+#include <math.h>
 #include "../headers/modelo.hpp"
 #include <vector>
 #include <chrono>
@@ -97,14 +97,19 @@ bool Choque::colisao_cobras(ListaDeCobra *cobra, int ID){
 	std::vector<Cobra_corpo *> *alvo;
 	cabeca_x = (*c)[0]->get_posicaoX();
 	cabeca_y = (*c)[0]->get_posicaoY();
-	
 	for(int i = 0; i < tamanho; i++){
 		if( i == ID) continue; // nao verifico com a mesma cobra
 		alvo = (*l)[i]->get_corpos(); // obtenho o corpo da cobra i
+		int ca_x = (*alvo)[0]->get_posicaoX();
+		int ca_y = (*alvo)[0]->get_posicaoY();
+		if(ca_x == cabeca_x && ca_y == cabeca_y)
+			return true;
 		for(j = 0; j < (*alvo).size(); j++){ // para cada corpo da cobra, verifico se ocorre a colisa
 			corpo_x = (*alvo)[j]->get_posicaoX();
 			corpo_y = (*alvo)[j]->get_posicaoY();
-			if( corpo_x == cabeca_x && corpo_y == cabeca_y)
+			if( abs(corpo_x - cabeca_x) < 3 && corpo_y == cabeca_y)
+				return true;
+			if( (corpo_x  == cabeca_x)  && abs(corpo_y - cabeca_y) < 3)
 				return true;
 		}
 	}
