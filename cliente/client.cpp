@@ -1,3 +1,7 @@
+/* segundo codigo para a disciplina EA872*/
+
+
+
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -77,6 +81,10 @@ int main() {
 	Audio::Sample *asample2;
 	asample2 = new Audio::Sample();
 	asample2->load("Audios/Bite.dat");
+	
+	Audio::Sample *asample3;
+	asample3 = new Audio::Sample();
+	asample3->load("Audios/Victory-Free-Sound-Effect.dat");
 	      
 	Audio::Player *player;
 	player = new Audio::Player();
@@ -116,7 +124,6 @@ int main() {
 		D1->clean(); // recebo do servidor os dados e do upload
  		cliente->unserial();
  		som = tela->update_client();
-// 		D1->dump();
 		if(som == 1){ /* tocar comida*/
 			std::this_thread::sleep_for (std::chrono::milliseconds(100));
 			asample2->set_position(0); // caso tenha comido
@@ -133,6 +140,8 @@ int main() {
 		else if( som == 4){/* tocar vitoria*/
 			mvprintw(16,45,"Voce ganhou o Jogo ");
 			refresh();
+			asample3->set_position(0); // caso tenha comida
+			player->play(asample3);
 			std::this_thread::sleep_for (std::chrono::milliseconds(5000));
 			break;
 		}

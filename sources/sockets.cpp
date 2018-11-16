@@ -115,7 +115,7 @@ void Sockets::init_cliente(){
     printf("Socket criado\n");
 
     target.sin_family = AF_INET;
-    target.sin_port = htons(3001);//192.168.0.34
+    target.sin_port = htons(3002);//192.168.0.34
     inet_aton("177.220.34.186", &(target.sin_addr));
     printf("Tentando conectar\n");
     if (connect(this->socket_fd, (struct sockaddr*)&target, sizeof(target)) != 0) { // conect: 
@@ -140,7 +140,7 @@ void Sockets::init_servidor() { /* consegue se conectar*/
         this-> socket_fd = socket(AF_INET, SOCK_STREAM, 0); // sockstream = TCP
         printf("Socket criado\n");
         myself.sin_family = AF_INET;
-        myself.sin_port = htons(3001);
+        myself.sin_port = htons(3002);
 	inet_aton("177.220.34.186", &(myself.sin_addr));
         printf("Tentando abrir porta 3001\n");
         if (bind(this->socket_fd, (struct sockaddr*)&myself, sizeof(myself)) != 0) {

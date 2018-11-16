@@ -15,6 +15,7 @@ RelevantData::RelevantData(Comida *food, ListaDeCobra *lista) {
 	this->food = food;
 	this->lista = lista;
 }
+/* funcao auxiliar que ajudou na serializacao dos dados*/
 void RelevantData::dump() {
 	int i, j;
 	DataContainer aux;
@@ -33,18 +34,10 @@ void RelevantData::dump() {
 		mvprintw(15,j,"%d ",posicoes[j].a);
 		mvprintw(16,j,"%d ",posicoes[j].b);
 		for(int k = 0; k < aux.a; k++){ // para cada corpo pertencente a cobra
-			j++; // posso variar o que for printar usando aux.b, mas deixar isso para depois de tudo OK
-// 			mvprintw(15,i,"%d ",this->dados[i].a);
-// 			mvprintw(16,i,"%d ",this->dados[i].b);
+			j++; // posso variar o que for printar usando aux.b, 
 		}
 	}
 	
-	
-// 	for( int i = 0; i < this->dados.size(); i++){ // enfia corpo no buffer
-// 		mvprintw(15,i,"%d ",this->dados[i].a);
-// 		mvprintw(16,i,"%d ",this->dados[i].b);
-// 		mvprintw(0,0,"%d",i);
-// 	}
 }
 
 void RelevantData::dados_print(){

@@ -15,6 +15,7 @@ void threadcliente2  ( int *control, int *connection, char *buffer);
 void *wait_connections(int *connection, Sock *estr_client);/* retorna 1 se houver uma ou mais conexoes*/
 int adicionar_conexao(int new_connection_fd,Sock *estr_client);
 
+
 class Sockets{
 private:
 	RelevantData *D1;

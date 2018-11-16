@@ -3,7 +3,7 @@
  * Nome : André de Morais Yoshida
  * RA: 166241
  * 
- * Primeiro projeto da disciplina EA872
+ * Segundo projeto da disciplina EA872
  * 
  * 
  * 

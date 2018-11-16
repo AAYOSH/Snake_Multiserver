@@ -33,5 +33,5 @@ run:all
 	./$(TARGET)
 
 clean:
-	$(RM) ./$(TARGET)
+	$(RM) ./$(TARGET) ./$(ClIENTE_TARGET)
 	$(RM) $(DIR)/*.o
